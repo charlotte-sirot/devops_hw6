@@ -2,9 +2,14 @@ version: '3'
 services:
   redis:
     image: "redis"
+    restart: always
   web:
     build: .
+    depends_on:
+      - redis
     ports:
       - "5000:8080"
-    # environment:
-      # ...
+    restart: always
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
